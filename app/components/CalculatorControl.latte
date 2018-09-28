@@ -1,0 +1,56 @@
+
+<div id="calculator">
+        {snippet history}   
+            <div id="resultsHistory" data-link="{link saveHistory!}">
+            {if isset($history)} 
+                {foreach $history as $key => $value}
+                    <p class="singleResult" id="result{$key}">{$value}</p>
+                {/foreach}
+            {/if}
+            </div>
+        {/snippet}
+        <div id="wholedisplay">    
+        {snippet display}
+            <input type="textarea" id="display" maxlength="24"
+                   {if isset($displayVal) && $displayVal !== 'error'}value="{$displayVal}"{/if}placeholder="0">
+            {snippet continuos}
+                <p id="continuosResult" data-link="{link continuosResult!}">{if isset($displayConVal)}{$displayConVal}{/if}</p>
+            {/snippet}  
+        {/snippet}
+        </div>
+          <div id="keyboard">
+    <ul>
+        <button id="clear">C</button>
+        <button class="operator" value="/">/</button>
+        <button class="operator" value="*">×</button>
+        <button id="back">↩</button>
+    </ul>
+    <ul>
+        <button class="num" value="7">7</button>
+        <button class="num" value="8">8</button>
+        <button class="num" value="9">9</button>
+        <button class="operator" value="-">-</button>    
+     </ul>
+    <ul>
+        <button class="num" value="4">4</button>
+        <button class="num" value="5">5</button>
+        <button class="num" value="6">6</button>
+       <button class="operator" value="+">+</button>
+     </ul>
+    <ul>
+        <button class="num" value="1">1</button>
+        <button class="num" value="2">2</button>
+        <button class="num" value="3">3</button>
+         <button id="allClear" data-link="{link allClear!}">AC</button>
+     </ul>
+    <ul>
+        <button class="operator" value=".">,</button>
+        <button class="num" value="0">0</button>
+        <button id="equals" data-link="{link calculate!}">=</button>
+       
+     </ul>
+</div>
+
+</div>
+    
+    
