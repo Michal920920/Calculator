@@ -95,12 +95,12 @@ class CalculatorService {
     private function parseMinus($stored){
         $components = $stored;
         foreach($stored as $key => $value){
-             
-            if($value == '/' || $value == '*' && $stored[$key+1] == '-'){
+           
+            if(($value == '/'  || $value == '*') && $stored[$key+1] == '-'){
                 $stored[$key+2] = '-' .$stored[$key+2];
                 unset($stored[$key+1]);
                 $components = array_values($stored);
-            }else if($value == '/'|| $value == '*' && $stored[$key+1] == '+'){
+            }else if(($value == '/'  || $value == '*') && $stored[$key+1] == '+'){
                   unset($stored[$key+1]);
                   $components = array_values($stored);
             }
