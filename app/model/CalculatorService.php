@@ -41,9 +41,13 @@ class CalculatorService {
         if(!$matches || $zeroDiv){
              return false;
         }
+
         //rozdělení prvků podle operátorů
         $components = preg_split('#([*/+-])#',$example,NULL,PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-        
+           
+        //ošetření dělení a násobení +/- čísla 
+        $components = $this->parseMinus($components);
+
         //ošetření +/- na první pozici
         if($components[0] == '+'){
             array_shift($components);
@@ -52,7 +56,6 @@ class CalculatorService {
             $components[0] = '-'.$components[0];
         }
         return $components;
-        
     }
     
     /**
@@ -60,7 +63,6 @@ class CalculatorService {
      *  
      */
     public function save($expression, $saved){
-
         $history = [0 => $expression];
         $zeroDiv = $this->checkZeroDivide($expression);
         $matches = $this->checkSymbolsExpression($expression);
@@ -84,11 +86,26 @@ class CalculatorService {
     
     private function checkSymbolsExample($stored){
 
-        return preg_match("/^\s*([-+]?)(\d+)(?:\s*([-+*.\/])\s*((?:\s[-+])?\d+)\s*)*$/", $stored);
+        return preg_match("/^\s*([-+]?)(\d+)(?:\s*([-+*.\/])\s*([-+]?)(\d+)\s*)*$/", $stored);
     }
     private function checkSymbolsExpression($stored){
 
-        return preg_match("/^\s*([-+]?)(\d+)(?:\s*([-+*.\/])\s*((?:\s[-+])?\d+)\s*)+([=])([-])?(\d+)*([E][\+])?([.](\d+))*([E][\+])?(\d+)$/", $stored);
+        return preg_match("/^\s*([-+]?)(\d+)(?:\s*([-+*.\/])\s*([-+])?(\d+)\s*)+([=])([-])?(\d+)*([E][\+])?([.](\d+))?([E][\+])?(\d+)?(?:\s*((?:[.])?\d+)\s*)$/", $stored);
+    }
+    private function parseMinus($stored){
+        $components = $stored;
+        foreach($stored as $key => $value){
+             
+            if($value == '/' || $value == '*' && $stored[$key+1] == '-'){
+                $stored[$key+2] = '-' .$stored[$key+2];
+                unset($stored[$key+1]);
+                $components = array_values($stored);
+            }else if($value == '/'|| $value == '*' && $stored[$key+1] == '+'){
+                  unset($stored[$key+1]);
+                  $components = array_values($stored);
+            }
+        }
+        return $components;
     }
 }
 

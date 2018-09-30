@@ -32,15 +32,16 @@ return array (
       'file' => 'C:\\xampp\\htdocs\\calculator\\app\\presenters\\HomepagePresenter.php',
       'time' => 1537297310,
     ),
-    'App\\Model\\CalculatorService' => 
-    array (
-      'file' => 'C:\\xampp\\htdocs\\calculator\\app\\model\\CalculatorService.php',
-      'time' => 1538086076,
     ),
     'App\\Components\\CalculatorControl' => 
     array (
       'file' => 'C:\\xampp\\htdocs\\calculator\\app\\components\\CalculatorControl.php',
       'time' => 1538086116,
+    ),
+    'App\\Model\\CalculatorService' => 
+    array (
+      'file' => 'C:\\xampp\\htdocs\\calculator\\app\\model\\CalculatorService.php',
+      'time' => 1538312449,
     ),
   ),
   1 => 

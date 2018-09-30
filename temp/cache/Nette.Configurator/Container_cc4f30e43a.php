@@ -11,12 +11,6 @@ class Container_cc4f30e43a extends Nette\DI\Container
 			'Nette\Application\LinkGenerator' => [1 => ['application.linkGenerator']],
 			'Nette\Caching\Storages\IJournal' => [1 => ['cache.journal']],
 			'Nette\Caching\IStorage' => [1 => ['cache.storage']],
-			'Nette\Database\Connection' => [1 => ['database.default.connection']],
-			'Nette\Database\IStructure' => [1 => ['database.default.structure']],
-			'Nette\Database\Structure' => [1 => ['database.default.structure']],
-			'Nette\Database\IConventions' => [1 => ['database.default.conventions']],
-			'Nette\Database\Conventions\DiscoveredConventions' => [1 => ['database.default.conventions']],
-			'Nette\Database\Context' => [1 => ['database.default.context']],
 			'Nette\Http\RequestFactory' => [1 => ['http.requestFactory']],
 			'Nette\Http\IRequest' => [1 => ['http.request']],
 			'Nette\Http\Request' => [1 => ['http.request']],
@@ -33,8 +27,8 @@ class Container_cc4f30e43a extends Nette\DI\Container
 			'Tracy\ILogger' => [1 => ['tracy.logger']],
 			'Tracy\BlueScreen' => [1 => ['tracy.blueScreen']],
 			'Tracy\Bar' => [1 => ['tracy.bar']],
-			'App\Components\CalculatorControlFactory' => [1 => ['24_App_Components_CalculatorControlFactory']],
-			'App\Model\CalculatorService' => [1 => ['25_App_Model_CalculatorService']],
+			'App\Components\CalculatorControlFactory' => [1 => ['20_App_Components_CalculatorControlFactory']],
+			'App\Model\CalculatorService' => [1 => ['21_App_Model_CalculatorService']],
 			'Nette\Application\UI\Control' => [['calculatorControl', 'application.1', 'application.3']],
 			'Nette\Application\UI\Component' => [['calculatorControl', 'application.1', 'application.3']],
 			'Nette\ComponentModel\Container' => [['calculatorControl', 'application.1', 'application.3']],
@@ -57,8 +51,8 @@ class Container_cc4f30e43a extends Nette\DI\Container
 			'Nette\DI\Container' => [1 => ['container']],
 		],
 		'services' => [
-			'24_App_Components_CalculatorControlFactory' => 'App\Components\CalculatorControlFactory',
-			'25_App_Model_CalculatorService' => 'App\Model\CalculatorService',
+			'20_App_Components_CalculatorControlFactory' => 'App\Components\CalculatorControlFactory',
+			'21_App_Model_CalculatorService' => 'App\Model\CalculatorService',
 			'application.1' => 'App\Presenters\Error4xxPresenter',
 			'application.2' => 'App\Presenters\ErrorPresenter',
 			'application.3' => 'App\Presenters\HomepagePresenter',
@@ -71,10 +65,6 @@ class Container_cc4f30e43a extends Nette\DI\Container
 			'cache.storage' => 'Nette\Caching\IStorage',
 			'calculatorControl' => 'App\Components\CalculatorControl',
 			'container' => 'Nette\DI\Container',
-			'database.default.connection' => 'Nette\Database\Connection',
-			'database.default.context' => 'Nette\Database\Context',
-			'database.default.conventions' => 'Nette\Database\Conventions\DiscoveredConventions',
-			'database.default.structure' => 'Nette\Database\Structure',
 			'http.context' => 'Nette\Http\Context',
 			'http.request' => 'Nette\Http\Request',
 			'http.requestFactory' => 'Nette\Http\RequestFactory',
@@ -110,12 +100,9 @@ class Container_cc4f30e43a extends Nette\DI\Container
 		'aliases' => [
 			'application' => 'application.application',
 			'cacheStorage' => 'cache.storage',
-			'database.default' => 'database.default.connection',
 			'httpRequest' => 'http.request',
 			'httpResponse' => 'http.response',
 			'nette.cacheJournal' => 'cache.journal',
-			'nette.database.default' => 'database.default',
-			'nette.database.default.context' => 'database.default.context',
 			'nette.httpContext' => 'http.context',
 			'nette.httpRequestFactory' => 'http.requestFactory',
 			'nette.latteFactory' => 'latte.latteFactory',
@@ -144,14 +131,14 @@ class Container_cc4f30e43a extends Nette\DI\Container
 	}
 
 
-	public function createService__24_App_Components_CalculatorControlFactory(): App\Components\CalculatorControlFactory
+	public function createService__20_App_Components_CalculatorControlFactory(): App\Components\CalculatorControlFactory
 	{
 		$service = new App\Components\CalculatorControlFactory($this);
 		return $service;
 	}
 
 
-	public function createService__25_App_Model_CalculatorService(): App\Model\CalculatorService
+	public function createService__21_App_Model_CalculatorService(): App\Model\CalculatorService
 	{
 		$service = new App\Model\CalculatorService;
 		return $service;
@@ -196,7 +183,7 @@ class Container_cc4f30e43a extends Nette\DI\Container
 			$this->getService('security.user'),
 			$this->getService('latte.templateFactory')
 		);
-		$service->calculatorControlFactory = $this->getService('24_App_Components_CalculatorControlFactory');
+		$service->calculatorControlFactory = $this->getService('20_App_Components_CalculatorControlFactory');
 		$service->invalidLinkMode = 5;
 		return $service;
 	}
@@ -276,7 +263,7 @@ class Container_cc4f30e43a extends Nette\DI\Container
 	public function createServiceCalculatorControl(): App\Components\CalculatorControl
 	{
 		$service = new App\Components\CalculatorControl;
-		$service->calculatorService = $this->getService('25_App_Model_CalculatorService');
+		$service->calculatorService = $this->getService('21_App_Model_CalculatorService');
 		return $service;
 	}
 
@@ -284,41 +271,6 @@ class Container_cc4f30e43a extends Nette\DI\Container
 	public function createServiceContainer(): Nette\DI\Container
 	{
 		return $this;
-	}
-
-
-	public function createServiceDatabase__default__connection(): Nette\Database\Connection
-	{
-		$service = new Nette\Database\Connection('mysql:host=127.0.0.1;dbname=treemanager_db', 'root', null, ['lazy' => true]);
-		$this->getService('tracy.blueScreen')->addPanel('Nette\Bridges\DatabaseTracy\ConnectionPanel::renderException');
-		Nette\Database\Helpers::createDebugPanel($service, true, 'default');
-		return $service;
-	}
-
-
-	public function createServiceDatabase__default__context(): Nette\Database\Context
-	{
-		$service = new Nette\Database\Context(
-			$this->getService('database.default.connection'),
-			$this->getService('database.default.structure'),
-			$this->getService('database.default.conventions'),
-			$this->getService('cache.storage')
-		);
-		return $service;
-	}
-
-
-	public function createServiceDatabase__default__conventions(): Nette\Database\Conventions\DiscoveredConventions
-	{
-		$service = new Nette\Database\Conventions\DiscoveredConventions($this->getService('database.default.structure'));
-		return $service;
-	}
-
-
-	public function createServiceDatabase__default__structure(): Nette\Database\Structure
-	{
-		$service = new Nette\Database\Structure($this->getService('database.default.connection'), $this->getService('cache.storage'));
-		return $service;
 	}
 
 

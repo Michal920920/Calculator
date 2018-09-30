@@ -6,6 +6,7 @@ $(document).ajaxComplete(fontSize);
         
         var operators = ["+", "-", "*", "/", "."];
         var operatorsPlusMinus = ["+", "-"];
+        var operatorsDivAdd = ["/", "*"];
         var display = $('#display').val();
 
        //na vstupu číslo, odešleme k výpočtu
@@ -29,10 +30,15 @@ $(document).ajaxComplete(fontSize);
                      $('#display').val(display.substring(0,display.length - 1));
                      $('#display').val($(this).val());
                 }
-            //předešlý znak je operátor    
-            }else if($.inArray(lastChar, operators) !== -1 && display.length > 1){ 
-                $('#display').val(display.substring(0,display.length - 1));
-                $('#display').val($('#display').val() + $(this).val());//vymazat a nahradit vstupem
+            //předešlý znak je operátor
+            }else if($.inArray(lastChar, operators) !== -1 && display.length > 1){
+                if($.inArray(lastChar, operatorsDivAdd) !== -1 && $.inArray($(this).val(), operatorsPlusMinus) !== -1){
+                     $('#display').val($('#display').val() + $(this).val());
+                }else{
+                     $('#display').val(display.substring(0,display.length - 1));
+                     $('#display').val($('#display').val() + $(this).val());//vymazat a nahradit vstupem 
+                }
+
             //ostatní za první pozicí, pokud to není +/-
             }else if(display.length > 0 && $.inArray(lastChar, operatorsPlusMinus) === -1){
                 $('#display').val(display + $(this).val());
